@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/c5440be4f1.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -15,19 +16,21 @@
             <button type="submit">Enregistrer</button>
         </div>
     </div>
-    <header>
-        <input type="text" name="search" id="search">
-    </header>
-    <section class="side-bar">
-        <header>
+    <header class="research-header">
+        <div class="side-bar">
             <div class="burger">
                 <i class="fa-solid fa-bars"></i>
             </div>
             <div class="name">
-                <i class="fa-solid fa-user"></i>
                 <h1>Contact</h1>
             </div>
-        </header>
+        </div>
+        <div class="research-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="search" id="search">
+        </div>
+    </header>
+    <section class="side-bar">
         <div class="frequents">
             <i class="fa-solid fa-clock-rotate-left"></i>
             <h2>Frequents</h2>
@@ -101,28 +104,28 @@
                 <i class="fa-solid fa-phone"></i>
                 <select name="country-id" id="country-id">
                 </select>
+                <input  type="tel" 
+                        pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+                        name="phone_number">
             </div>
 
         </form>
     </main>
     <script>
-        // Remplacez 'your_api_key' par votre clé API réelle
-        const apiKey = 'your_api_key';
-        const ipAddress = '8.8.8.8'; // Exemple d'adresse IP, remplacez par l'adresse IP à vérifier
-
-        const url = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&ip=${ipAddress}`;
-
-        fetch(url)
+        fetch('https://restcountries.com/v3.1/all')
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            const countryName = data.country_name;
-            const countryCode = data.country_calling_code;
-
-            console.log(`Nom du pays: ${countryName}`);
-            console.log(`Indicatif international: ${countryCode}`);
+           const selectElement = document.getElementById('country-id');
+           data.forEach(country => {
+            console.log(country.alpha2code)
+             const option = document.createElement('option');
+             option.value = country.alpha2code; 
+             option.text = country.name.common; 
+             selectElement.appendChild(option);
+           });
         })
         .catch(error => console.error('Erreur lors de la récupération des données:', error));
+       
     </script>
 </body>
 </html>
