@@ -93,10 +93,14 @@ body {
   flex-direction: column;
   align-items: baseline;
   width: 15em;
+  padding: 24px 12px;
 }
 
 .section__title {
   font-weight: bold;
+  margin-bottom: 30pxa;
 }
-
+.label__item {
+  font-weight: lighter;
+}
 /* Fin de l'édition de la sidebar */
