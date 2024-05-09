@@ -95,4 +95,8 @@ body {
   width: 15em;
 }
 
+.section__title {
+  font-weight: bold;
+}
+
 /* Fin de l'édition de la sidebar */
