@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://kit.fontawesome.com/c5440be4f1.js" crossorigin="anonymous"></script>
+    <script src="./script.js" defer></script>
 </head>
+
 <body>
     <div class="create-label">
         <h1>creer un libellé</h1>
-        <input type="text" id="create-label">
+        <input type="text" id="create-label" />
         <div class="buttons">
-            <button>Ne rien faire </button>
+            <button>Ne rien faire</button>
             <button type="submit">Enregistrer</button>
         </div>
     </div>
@@ -21,122 +24,102 @@
             <div class="burger">
                 <i class="fa-solid fa-bars"></i>
             </div>
+            <div class="image">
+                <img src="./images/research-header.png" alt="" />
+            </div>
             <div class="name">
                 <h1>Contact</h1>
-            </div>
-            <div class="image">
-                <img src="./images/research-header.png" alt="">
             </div>
         </div>
         <div class="research-bar">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Recherchez" name="search" id="search">
+            <input type="text" placeholder="Recherchez" name="search" id="search" />
         </div>
     </header>
-    
+
     <div class="main">
         <div class="side-bar">
+            <button class="section__title primary-button" id="create-contact">
+                <i class="fa-solid fa-plus"></i>
+                <h1>Créer un contact</h1>
+            </button>
             <div class="section__title frequents">
-                <i class="fa-solid fa-clock-rotate-left"></i>
                 <h2>Frequents</h2>
+                <i class="fa-solid fa-clock-rotate-left"></i>
             </div>
-            <div class="section__title section__label__list__container">
-                <div class="labels__title">
+            <div class="section__label__list__container">
+                <div class="section__title labels__title">
                     <h2>Libélés</h2>
                     <i class="fa-solid fa-plus"></i>
                 </div>
                 <div class="label__list">
                     <div class="label__item">
-                    <i class="fa-solid fa-tags"></i>
-                    <h1>Bureau</h1>
+                        <i class="fa-solid fa-tags"></i>
+                        <h1>Bureau</h1>
+                    </div>
                 </div>
-                </div>
-                
             </div>
         </div>
-        
+
         <div class="main__list">
-            <header class="main__header">
-                <h1>Contacts</h1>
-            </header>
-            <div class="contact-list__container">
-                <div class="contact-list-header">
-                    <div class="contact-list__header__title">
-                        Titre
-                    </div>
-                    <div class="contact-list__header__email">
-                        Email
-                    </div>
-                    <div class="contact-list__header__phone-number">
-                        numero de telephone
-                    </div>
-                    <div class="contact-list__header__fonction-and-enterprise">
-                        Fonction et entreprise
-                    </div>
-                    <div class="contact-list__header__label">
-                        Libellés
-                    </div>
-                </div>
-                <div class="contact-list">
-                </div>
+            <!-- <header class="head main__header">
+          <h1>Contacts</h1>
+        </header>
+        <div class="contact-list__container">
+          <div class="head contact-list-header">
+            <div class="contact-list__header__title">Titre</div>
+            <div class="contact-list__header__email">Email</div>
+            <div class="contact-list__header__phone-number">
+              numero de telephone
             </div>
+            <div class="contact-list__header__fonction-and-enterprise">
+              Fonction et entreprise
+            </div>
+            <div class="contact-list__header__label">Libellés</div>
+          </div>
+          <div class="contact-list"></div> -->
+            <main class="add-edit-contact">
+                <form>
+                    <header class="edit-contact__header">
+                        <button class="back">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="save">
+                            <button>Enregistrer</button>
+                        </div>
+                    </header>
+
+                    <figure>
+                        <img src="./images/image.png" alt="photo de profil" />
+                        <i class="fa-solid fa-plus"></i>
+                    </figure>
+                    <div class="form__component identity">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Prenom" />
+                        <input type="text" placeholder="Nom" />
+                    </div>
+
+                    <div class="form__component functions">
+                        <input type="text" placeholder="Entreprise" />
+                        <input type="text" placeholder="Fonction" name="function" id="function" />
+                    </div>
+
+                    <div class="form__component contacts">
+                        <input type="text" placeholder="Email" name="email" id="email" />
+                        <button>
+                            <i class="fa-solid fa-plus"></i> Ajouter une adresse Email
+                        </button>
+                        <i class="fa-solid fa-phone"></i>
+                        <select name="country-id" id="country-id"></select>
+                        <input type="tel"
+                            pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
+                            name="phone_number" />
+                    </div>
+                </form>
+            </main>
         </div>
     </div>
-
-    <main class="add-edit-contact">
-        <header class="edit-contact__header">
-            <div class="back">
-                <i class="fa-solid fa-arrow-left"></i>
-            </div>
-            <div class="save">
-                <button type="submit">Enregistrer</button>
-            </div>
-        </header>
-
-        <figure>
-            <img src="" alt="photo de profil">
-            <i class="fa-solid fa-plus "></i>
-        </figure>
-        <form>
-            <div class="identity">
-                <i class="fa-regular fa-user"></i>
-                <input type="text" placeholder="Prenom">
-                <input type="text" placeholder="Nom">
-            </div>
-
-            <div class="functions">
-                <input type="text" placeholder="Entreprise">
-                <input type="text" placeholder="Fonction" name="function" id="function">
-            </div>
- 
-            <div class="contacts">
-                <input type="text" placeholder="Email" name="email" id="email">
-                <button><i class="fa-solid fa-plus"></i> Ajouter une adresse Email</button>
-                <i class="fa-solid fa-phone"></i>
-                <select name="country-id" id="country-id">
-                </select>
-                <input  type="tel" 
-                        pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
-                        name="phone_number">
-            </div>
-
-        </form>
-    </main>
-    <script>
-        fetch('https://restcountries.com/v3.1/all')
-        .then(response => response.json())
-        .then(data => {
-           const selectElement = document.getElementById('country-id');
-           data.forEach(country => {
-            console.log(country.alpha2code)
-             const option = document.createElement('option');
-             option.value = country.alpha2code; 
-             option.text = country.name.common; 
-             selectElement.appendChild(option);
-           });
-        })
-        .catch(error => console.error('Erreur lors de la récupération des données:', error));
-       
-    </script>
+    </div>
 </body>
+
 </html>
