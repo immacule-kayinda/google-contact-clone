@@ -166,6 +166,11 @@ form .edit-contact__header {
   flex-direction: row;
 }
 
+.add-edit-contact form {
+  display: flex;
+  flex-direction: column;
+}
+
 .back {
   font-size: 1em;
   width: 40px;
@@ -218,6 +223,10 @@ figure .fa-plus {
   justify-content: center;
   align-items: center;
   color: white;
+}
+
+.contacts {
+  flex-direction: column;
 }
 
 .form__component input[type="text"] {
