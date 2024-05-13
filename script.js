@@ -1,26 +1,49 @@
 const sortBy = document.querySelector("#sortBy");
-const contactList = [];
-
+const contactArray = [];
+const contactList = document.querySelector(".contact-list");
 const createContactBtn = document.querySelector("#create-contact");
 const preview = [];
+const main = document.querySelector(".main__list");
 
-function filteringList(event) {
-  const value = event.target.value;
-  const allTheTask = Array.from(tasks.querySelectorAll(".task"));
-  if (value === "completed") {
-    filterDone(allTheTask);
-  } else {
-    allTheTask.forEach((element) => {
-      element.classList.remove("hide");
-    });
-  }
-}
+function displayContactList(contactArray) {
+  let innerHTML = "";
+  contactArray.forEach((contact) => {
+    const contactId = document.getElementById(contact.id);
+    if (!contactId) {
+      console.log(preview.includes(contact.id));
+      let labelHtml = "";
+      contact.labels.forEach((label) => {
+        labelHtml += `
+        <div class="label">
+          ${label}
+        </div>
+      `;
+      });
 
-function filterDone(array) {
-  array.forEach((element) => {
-    console.log(element.className);
-    if (element.className !== "task done") element.classList.add("hide");
+      innerHTML += `
+      <div class="contact-item">
+        <div class="head contact-list-header" id="${contact.id}">
+          <div class="contact-item header__title">${
+            contact.firstName + " " + contact.lastName
+          }</div>
+          <div class="contact-item header__email">
+            ${contact.email}
+          </div>
+          <div class="contact-item header__phone-number">
+            ${contact.phoneNumber}
+          </div>
+          <div class="contact-item header__fonction-and-enterprise">
+            ${contact.functionIn}
+          </div>
+          <div class="contact-item header__label">
+            ${labelHtml}
+          </div>
+        </div>
+      </div>
+    `;
+    }
   });
+  return innerHTML;
 }
 
 function createElement(type, properties = {}) {
@@ -45,44 +68,63 @@ function createContact(
   lastName,
   phoneNumber
 ) {
-  const contactId = crypto.randomUUID();
-  const checkBoxId = `tache${contactId}`;
+  const id = crypto.randomUUID();
+  const checkBoxId = `tache${id}`;
 
-  const taskCheckInput = createElement("input", {
-    type: "checkbox",
-    id: checkBoxId,
-    onchange: () => {
-      changeChecked(contactId);
-    },
-  });
+  const Contact = {
+    countryId,
+    email,
+    enterprise,
+    firstName,
+    functionIn,
+    lastName,
+    phoneNumber,
+    isFavorite: false,
+    labels: [],
+    id,
+  };
 
-  const taskLabel = createElement("label", {
-    htmlFor: checkBoxId,
-    textContent: taskName,
-  });
+  contactArray.push(Contact);
+  console.log(contactArray);
+  main.innerHTML = preview.at(-1);
+  main.innerHTML += displayContactList(contactArray);
+  preview.pop();
 
-  const deleteBtn = createButton("Supprimer", function () {
-    deleteTask(contactId);
-  });
-  const updateBtn = createButton("Modifier", function () {
-    updateTask(contactId);
-  });
+  // const taskCheckInput = createElement("input", {
+  //   type: "checkbox",
+  //   id: checkBoxId,
+  //   onchange: () => {
+  //     changeChecked(contactId);
+  //   },
+  // });
 
-  const task = createElement("div", {
-    className: "task",
-    id: contactId,
-  });
+  // const taskLabel = createElement("label", {
+  //   htmlFor: checkBoxId,
+  //   textContent: taskName,
+  // });
 
-  task.append(
-    taskCheckInput,
-    taskLabel,
-    document.createElement("br"),
-    deleteBtn,
-    updateBtn,
-    document.createElement("hr")
-  );
+  // const deleteBtn = createButton("Supprimer", function () {
+  //   deleteTask(contactId);
+  // });
+  // const updateBtn = createButton("Modifier", function () {
+  //   updateTask(contactId);
+  // });
 
-  tasks.appendChild(task);
+  // const contact = createElement("div", {
+  //   className: "contact-item",
+  //   id: contactId,
+  // });
+
+  // contact.append(
+  //   taskCheckInput,
+  //   taskLabel,
+  //   document.createElement("br"),
+  //   deleteBtn,
+  //   updateBtn,
+  //   document.createElement("hr")
+  // );
+
+  // tasks.appendChild(contact);
 }
 
 function changeChecked(taskId) {
@@ -92,13 +134,13 @@ function changeChecked(taskId) {
   task.classList.toggle("done");
 }
 
-function deleteContact(taskId) {
-  const task = document.getElementById(taskId);
+function deleteContact(contactId) {
+  const contact = document.getElementById(contactId);
 
   const confirmDeletion = confirm("Voulez-vous supprimer ce contact ?");
 
   if (confirmDeletion) {
-    task.remove();
+    contact.remove();
   }
 }
 
@@ -114,7 +156,6 @@ function updateTask(taskId) {
 }
 
 function openAddContact(event) {
-  const main = document.querySelector(".main__list");
   preview.push(main.innerHTML);
 
   main.innerHTML = `
@@ -168,7 +209,6 @@ function openAddContact(event) {
                 <select name="countryId" id="country-id"><option value="243">+243</option></select>
                 <label for="phone_number">Telephone</label>
                 <input type="text" name='phoneNumber'
-                  pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$"
                   id="phone_number" />  
                 <button class="add-button">
                   <i class="fa-solid fa-plus"></i>Ajouter un numero de telphone
@@ -213,6 +253,7 @@ function openAddContact(event) {
 
   const contactForm = document.querySelector("form");
   contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
     const data = new FormData(event.target);
 
     const {
@@ -224,15 +265,7 @@ function openAddContact(event) {
       lastName,
       phoneNumber,
     } = Object.fromEntries(data.entries());
-    console.log(
-      countryId,
-      email,
-      enterprise,
-      firstName,
-      functionIn,
-      lastName,
-      phoneNumber
-    );
+
     if (
       countryId &&
       email &&
@@ -251,11 +284,31 @@ function openAddContact(event) {
         lastName,
         phoneNumber
       );
-      preview.at(-1);
+      event.target.reset();
     }
-
-    event.preventDefault();
   });
 }
+
+const callback = (entries, observer) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      console.log("L'élément est maintenant visible!");
+      displayContactList(contactArray);
+      document.querySelector(
+        ".main__header p"
+      ).innerHTML = `${contactArray.length}`;
+    }
+  });
+};
+
+const options = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 1.0,
+};
+
+const observer = new IntersectionObserver(callback, options);
+
+observer.observe(contactList);
 
 createContactBtn.addEventListener("click", openAddContact);

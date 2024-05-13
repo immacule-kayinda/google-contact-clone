@@ -13,14 +13,16 @@
   </head>
 
   <body>
-    <!-- <div class="create-label">
-		<h1>creer un libellé</h1>
-		<input type="text" id="create-label" />
-		<div class="buttons">
-			<button>Ne rien faire</button>
-			<button type="submit">Enregistrer</button>
-		</div>
-	</div> -->
+    <div id="overlay" style="display: block"></div>
+    <div id="create-label" style="display: flex">
+      <h1>Créer un libellé</h1>
+      <label for="label-name">Nouveau label</label>
+      <input type="text" id="label-name" />
+      <div class="buttons">
+        <button onclick="closePopup()">Ne rien faire</button>
+        <button onclick="createLabel()" type="submit">Enregistrer</button>
+      </div>
+    </div>
     <header class="research-header">
       <div class="header__side-bar">
         <div class="burger">
@@ -67,6 +69,7 @@
         <div class="main__list">
           <div class="head main__header">
             <h1>Contacts</h1>
+            <p></p>
           </div>
           <div class="contact-list__container">
             <div class="head contact-list-header">
@@ -80,7 +83,23 @@
               </div>
               <div class="contact-list__header__label">Libellés</div>
             </div>
-            <div class="contact-list"></div>
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="head contact-list-header" id="">
+                  <div class="contact-item header__title">Immaculé Kayinda</div>
+                  <div class="contact-item header__email">
+                    immakaymw@gmail.com
+                  </div>
+                  <div class="contact-item header__phone-number">
+                    +243 897 481 511
+                  </div>
+                  <div class="contact-item header__fonction-and-enterprise">
+                    Coach
+                  </div>
+                  <div class="contact-item header__label">Bureau</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
