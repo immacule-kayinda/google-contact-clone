@@ -1,9 +1,10 @@
 const sortBy = document.querySelector("#sortBy");
-const contactArray = [];
 const contactList = document.querySelector(".contact-list");
 const createContactBtn = document.querySelector("#create-contact");
-const preview = [];
 const main = document.querySelector(".main__list");
+
+const preview = [];
+const contactArray = [];
 
 function displayContactList(contactArray) {
   let innerHTML = "";
@@ -127,21 +128,16 @@ function createContact(
   // tasks.appendChild(contact);
 }
 
-function changeChecked(taskId) {
-  const task = document.getElementById(taskId);
-  if (task.className === "task hide") task.classList.remove("hide");
-  else task.classList.add("hide");
-  task.classList.toggle("done");
-}
+function changeChecked(contactId) {}
 
 function deleteContact(contactId) {
-  const contact = document.getElementById(contactId);
-
   const confirmDeletion = confirm("Voulez-vous supprimer ce contact ?");
 
   if (confirmDeletion) {
-    contact.remove();
+    const index = contactArray.findIndex((el) => el.id === contactId);
+    contactArray.splice(index, 1);
   }
+  displayContactList(contactArray);
 }
 
 function updateTask(taskId) {
@@ -153,6 +149,81 @@ function updateTask(taskId) {
     const taskLabel = task.querySelector("label");
     taskLabel.textContent = newTaskName;
   }
+}
+
+function addEditContact(
+  countryId,
+  email,
+  enterprise,
+  firstName,
+  functionIn,
+  lastName,
+  phoneNumber,
+  isFavorite,
+  labels,
+  id
+) {
+  return `
+  <main class="add-edit-contact">
+      <form>
+        <header class="edit-contact__header">
+          <button class="back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <div class="save">
+            <button type='submit'>Enregistrer</button>
+          </div>
+        </header>
+
+        <figure class="ml-40">
+          <img src="./images/image.png" alt="photo de profil" />
+          <i class="fa-solid fa-plus"></i>
+        </figure>
+
+        <div class="form__component__container">
+          <div class="form__component identity">
+            <i class="fa-regular fa-user"></i>
+            <div>
+              <label for="prenom">Prenom</label>
+              <input type="text"  id="prenom" name='firstName' />
+              <label for="name">Nom</label>
+              <input type="text" name='lastName' id="name"/>
+            </div>
+          </div>
+          <div class="form__component functions">
+            <i class="fa-solid fa-building"></i>
+            <div>
+              <label for='entreprise'>Entreprise</label>
+              <input name='enterprise' type="text" id="entreprise" />
+              <label for="fonction">Foncton</label>
+              <input type="text" id="fonction" name="functionIn" id="function" />
+            </div>
+          </div>
+          <div class="form__component contacts">
+            <i class="fa-regular fa-envelope"></i>
+            <div>
+              <label for="email">Email</label>
+              <input type="text" id="email" name="email" id="email" />
+              <button class="add-button">
+                <i class="fa-solid fa-plus"></i>Ajouter une adresse Email
+              </button>
+            </div>
+
+            <i class="fa-solid fa-phone"></i>
+            <div class="phone-number__container">
+              <select name="countryId" id="country-id"><option value="243">+243</option></select>
+              <label for="phone_number">Telephone</label>
+              <input type="text" name='phoneNumber'
+                id="phone_number" />  
+              <button class="add-button">
+                <i class="fa-solid fa-plus"></i>Ajouter un numero de telphone
+              </button>      
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+  `;
 }
 
 function openAddContact(event) {
@@ -216,9 +287,6 @@ function openAddContact(event) {
               </div>
 						</div>
 					</div>
-
-
-
 				</form>
 			</main>
     `;
@@ -309,6 +377,6 @@ const options = {
 
 const observer = new IntersectionObserver(callback, options);
 
-observer.observe(contactList);
+observer.observe(main);
 
 createContactBtn.addEventListener("click", openAddContact);
