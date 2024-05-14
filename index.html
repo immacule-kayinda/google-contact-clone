@@ -13,16 +13,16 @@
   </head>
 
   <body>
-    <div id="overlay" style="display: block"></div>
-    <div id="create-label" style="display: flex">
+    <div id="overlay" style="display: none"></div>
+    <form id="create-label" onsubmit="createLabel" style="display: none">
       <h1>Créer un libellé</h1>
       <label for="label-name">Nouveau label</label>
-      <input type="text" id="label-name" />
+      <input name="labelName" type="text" id="label-name" />
       <div class="buttons">
-        <button onclick="closePopup()">Ne rien faire</button>
-        <button onclick="createLabel()" type="submit">Enregistrer</button>
+        <button onclick="closePopup()">Non, ne rien faire</button>
+        <button type="submit">Enregistrer</button>
       </div>
-    </div>
+    </form>
     <header class="research-header">
       <div class="header__side-bar">
         <div class="burger">
@@ -37,31 +37,36 @@
       </div>
       <div class="research-bar">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" placeholder="Recherchez" name="search" id="search" />
+        <input
+          type="text"
+          placeholder="Recherchez"
+          onkeyup="researching"
+          name="search"
+          id="search"
+        />
       </div>
     </header>
 
     <div class="main">
       <div class="side-bar">
-        <button class="section__title primary-button" id="create-contact">
+        <button
+          class="section__title primary-button"
+          onclick="openAddContact()"
+          id="create-contact"
+        >
           <i class="fa-solid fa-plus"></i>
           <h1>Créer un contact</h1>
         </button>
-        <div class="section__title frequents">
+        <div class="section__title component frequents">
           <h2>Frequents</h2>
           <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
         <div class="section__label__list__container">
-          <div class="section__title labels__title">
+          <div class="labels__title component">
             <h2>Libélés</h2>
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus" onclick="openCreateLabelPopup()"></i>
           </div>
-          <div class="label__list">
-            <div class="label__item">
-              <i class="fa-solid fa-tags"></i>
-              <h1>Bureau</h1>
-            </div>
-          </div>
+          <div class="label__list"></div>
         </div>
       </div>
 
@@ -83,23 +88,7 @@
               </div>
               <div class="contact-list__header__label">Libellés</div>
             </div>
-            <div class="contact-list">
-              <div class="contact-item">
-                <div class="head contact-list-header" id="">
-                  <div class="contact-item header__title">Immaculé Kayinda</div>
-                  <div class="contact-item header__email">
-                    immakaymw@gmail.com
-                  </div>
-                  <div class="contact-item header__phone-number">
-                    +243 897 481 511
-                  </div>
-                  <div class="contact-item header__fonction-and-enterprise">
-                    Coach
-                  </div>
-                  <div class="contact-item header__label">Bureau</div>
-                </div>
-              </div>
-            </div>
+            <div class="contact-list"></div>
           </div>
         </div>
       </div>

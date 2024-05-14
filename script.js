@@ -5,25 +5,112 @@ const main = document.querySelector(".main__list");
 
 const preview = [];
 const contactArray = [];
+const labelArray = [];
+
+main.querySelector(".main__header p").innerHTML = ` (${contactArray.length})`;
 
 function displayContactList(contactArray) {
   let innerHTML = "";
+
   contactArray.forEach((contact) => {
     const contactId = document.getElementById(contact.id);
-    if (!contactId) {
+    if (!contactId && contact.isDeleted === false) {
       console.log(preview.includes(contact.id));
       let labelHtml = "";
       contact.labels.forEach((label) => {
         labelHtml += `
         <div class="label">
-          ${label}
+        ${label}
         </div>
-      `;
+        `;
       });
 
       innerHTML += `
       <div class="contact-item">
         <div class="head contact-list-header" id="${contact.id}">
+        <div class="contact-item header__title">${
+          contact.firstName + " " + contact.lastName
+        }</div>
+        <div class="contact-item header__email">
+          ${contact.email}
+        </div>
+        <div class="contact-item header__phone-number">
+          ${contact.phoneNumber}
+        </div>
+        <div class="contact-item header__fonction-and-enterprise">
+          ${contact.functionIn}
+        </div>
+        <div class="contact-item header__label">
+          ${labelHtml}
+        </div>
+        </div>
+      </div>
+      `;
+    }
+  });
+  console.log(innerHTML);
+  return innerHTML;
+}
+
+function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("create-label").style.display = "none";
+  document.getElementById("label-name").value;
+}
+
+function createLabel(event) {
+  event.preventDefault();
+  const { labelName } = Object.fromEntries(
+    new FormData(event.target).entries()
+  );
+  event.target.reset();
+  labelArray.push(labelName);
+  document.getElementById("label-name").textContent = "";
+  closePopup();
+  console.log(labelName);
+  document.querySelector(".label__list").innerHTML = `
+    <div class="label__item">
+      <i class="fa-solid fa-bookmark"></i>
+      <h2>${labelName}</h2>
+    </div>  
+`;
+}
+
+function openCreateLabelPopup() {
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("create-label").style.display = "flex";
+}
+
+function createElement(type, properties = {}) {
+  const element = document.createElement(type);
+  Object.assign(element, properties);
+  return element;
+}
+
+function researching(event) {
+  const search = document.getElementById("search").value;
+  let contactList = "";
+  let innerHTML = "";
+  if (search !== "") {
+    contactList = document.querySelector(".contact-list").innerHTML;
+    document.querySelector(".contact-list").innerHTML = "";
+    contactArray
+      .filter((el) => search.match(`${el.firstName} + ${el.lastName}`))
+      .forEach((contact) => {
+        if (contact.isDeleted === false) {
+          console.log(preview.includes(contact.id));
+          let labelHtml = "";
+          contact.labels.forEach((label) => {
+            labelHtml += `
+          <div class="label">
+          ${label}
+          </div>
+          `;
+          });
+
+          innerHTML += `
+        <div class="contact-item">
+          <div class="head contact-list-header" id="${contact.id}">
           <div class="contact-item header__title">${
             contact.firstName + " " + contact.lastName
           }</div>
@@ -39,18 +126,12 @@ function displayContactList(contactArray) {
           <div class="contact-item header__label">
             ${labelHtml}
           </div>
+          </div>
         </div>
-      </div>
-    `;
-    }
-  });
-  return innerHTML;
-}
-
-function createElement(type, properties = {}) {
-  const element = document.createElement(type);
-  Object.assign(element, properties);
-  return element;
+        `;
+        }
+      });
+  }
 }
 
 function createButton(text, clickHandler) {
@@ -72,7 +153,7 @@ function createContact(
   const id = crypto.randomUUID();
   const checkBoxId = `tache${id}`;
 
-  const Contact = {
+  contactArray.push({
     countryId,
     email,
     enterprise,
@@ -83,12 +164,15 @@ function createContact(
     isFavorite: false,
     labels: [],
     id,
-  };
-
-  contactArray.push(Contact);
-  console.log(contactArray);
+    isDeleted: false,
+  });
+  console.log(contactArray.filter((el) => el.isDeleted === false));
   main.innerHTML = preview.at(-1);
+  console.log(displayContactList(contactArray));
   main.innerHTML += displayContactList(contactArray);
+  console.log(main.querySelector(".main__header p").innerHTML);
+  main.querySelector(".main__header p").innerHTML = ` (${contactArray.length})`;
+
   preview.pop();
 
   // const taskCheckInput = createElement("input", {
@@ -135,9 +219,9 @@ function deleteContact(contactId) {
 
   if (confirmDeletion) {
     const index = contactArray.findIndex((el) => el.id === contactId);
-    contactArray.splice(index, 1);
+    contactArray[index].isDeleted = true;
+    displayContactList(contactArray);
   }
-  displayContactList(contactArray);
 }
 
 function updateTask(taskId) {
@@ -356,27 +440,3 @@ function openAddContact(event) {
     }
   });
 }
-
-const callback = (entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      console.log("L'élément est maintenant visible!");
-      displayContactList(contactArray);
-      document.querySelector(
-        ".main__header p"
-      ).innerHTML = `${contactArray.length}`;
-    }
-  });
-};
-
-const options = {
-  root: null,
-  rootMargin: "0px",
-  threshold: 1.0,
-};
-
-const observer = new IntersectionObserver(callback, options);
-
-observer.observe(main);
-
-createContactBtn.addEventListener("click", openAddContact);
