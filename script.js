@@ -167,50 +167,16 @@ function createContact(
     id,
     isDeleted: false,
   });
-  console.log(contactArray.filter((el) => el.isDeleted === false));
+  console.log(contactArray.filter((el) => el.isDeleted));
   main.innerHTML = preview.at(-1);
   console.log(displayContactList(contactArray));
   main.innerHTML += displayContactList(contactArray);
   console.log(main.querySelector(".main__header p").innerHTML);
-  main.querySelector(".main__header p").innerHTML = ` (${contactArray.length})`;
+  main.querySelector(".main__header p").innerHTML = ` (${
+    contactArray.filter((el) => !el.isDeleted).length
+  })`;
 
   preview.pop();
-
-  // const taskCheckInput = createElement("input", {
-  //   type: "checkbox",
-  //   id: checkBoxId,
-  //   onchange: () => {
-  //     changeChecked(contactId);
-  //   },
-  // });
-
-  // const taskLabel = createElement("label", {
-  //   htmlFor: checkBoxId,
-  //   textContent: taskName,
-  // });
-
-  // const deleteBtn = createButton("Supprimer", function () {
-  //   deleteTask(contactId);
-  // });
-  // const updateBtn = createButton("Modifier", function () {
-  //   updateTask(contactId);
-  // });
-
-  // const contact = createElement("div", {
-  //   className: "contact-item",
-  //   id: contactId,
-  // });
-
-  // contact.append(
-  //   taskCheckInput,
-  //   taskLabel,
-  //   document.createElement("br"),
-  //   deleteBtn,
-  //   updateBtn,
-  //   document.createElement("hr")
-  // );
-
-  // tasks.appendChild(contact);
 }
 
 function changeChecked(contactId) {}
@@ -225,8 +191,8 @@ function deleteContact(contactId) {
   }
 }
 
-function updateTask(taskId) {
-  const task = document.getElementById(taskId);
+function updateTask(contactId) {
+  const task = document.getElementById(contactId);
   const taskLabel = task.querySelector("label");
   const newTaskName = prompt("Enter the new task name", taskLabel.textContent);
 
@@ -391,7 +357,8 @@ function openAddContact(event) {
 					</div>
 				</form>
 			</main>
-    `;
+  `;
+
   const backBtn = document.querySelector(".back");
   backBtn.addEventListener("click", (event) => {
     main.innerHTML = preview.at(-1);
@@ -410,22 +377,23 @@ function openAddContact(event) {
         "font-size": "x-small",
         color: "var(--inputing)",
       });
-      entry.addEventListener("blur", (event) => {
-        Object.assign(label.style, {
-          left: "24px",
-          top: "24px",
-          "font-size": "15px",
-          color: "rgb(104, 104, 104)",
+      if (entry.textContent === "") {
+        entry.addEventListener("blur", (event) => {
+          Object.assign(label.style, {
+            left: "24px",
+            top: "24px",
+            "font-size": "15px",
+            color: "rgb(104, 104, 104)",
+          });
         });
-      });
+      }
     });
   });
 
   const contactForm = document.querySelector("form");
+  console.log(contactForm);
   contactForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    const data = new FormData(event.target);
-
     const {
       countryId,
       email,
@@ -434,7 +402,7 @@ function openAddContact(event) {
       functionIn,
       lastName,
       phoneNumber,
-    } = Object.fromEntries(data.entries());
+    } = Object.fromEntries(new FormData(event.target).entries());
 
     if (
       countryId &&
