@@ -87,18 +87,17 @@ function createElement(type, properties = {}) {
   return element;
 }
 
-function researching(event) {
+function researching() {
+  console.log("'esdf");
   const search = document.getElementById("search").value;
-  let contactList = "";
+  const contactList = document.querySelector(".contact-list").innerHTML;
   let innerHTML = "";
   if (search !== "") {
-    contactList = document.querySelector(".contact-list").innerHTML;
     document.querySelector(".contact-list").innerHTML = "";
     contactArray
       .filter((el) => search.match(`${el.firstName} + ${el.lastName}`))
       .forEach((contact) => {
         if (contact.isDeleted === false) {
-          console.log(preview.includes(contact.id));
           let labelHtml = "";
           contact.labels.forEach((label) => {
             labelHtml += `
@@ -131,6 +130,8 @@ function researching(event) {
         `;
         }
       });
+  } else {
+    document.querySelector(".contact-list").innerHTML = contactList;
   }
 }
 
@@ -235,20 +236,37 @@ function updateTask(taskId) {
   }
 }
 
-function addEditContact(
-  countryId,
-  email,
-  enterprise,
-  firstName,
-  functionIn,
-  lastName,
-  phoneNumber,
-  isFavorite,
-  labels,
-  id
-) {
+function addEditContact(contactId = "", action = "add") {
+  const countryId =
+    (email =
+    enterprise =
+    firstName =
+    functionIn =
+    lastName =
+    phoneNumber =
+    isFavorite =
+    labels =
+    id =
+      "sdf");
+  console.log(enterprise);
+  if (action === "edit" && contactId !== "") {
+    const contactIndex = contactArray.findIndex(
+      (contact) => contact.id === contactId
+    );
+    const contact = contactArray[contactIndex];
+    countryId = contact.countryId;
+    email = contact.email;
+    enterprise = contact.enterprise;
+    firstName = contact.firstName;
+    functionIn = contact.functionIn;
+    lastName = contact.lastName;
+    phoneNumber = contact.phoneNumber;
+    isFavorite = contact.isFavorite;
+    labels = [...contact.labels];
+    id = contact.id;
+  }
   return `
-  <main class="add-edit-contact">
+    <main class="add-edit-contact">
       <form>
         <header class="edit-contact__header">
           <button class="back">
@@ -269,25 +287,25 @@ function addEditContact(
             <i class="fa-regular fa-user"></i>
             <div>
               <label for="prenom">Prenom</label>
-              <input type="text"  id="prenom" name='firstName' />
+              <input type="text"  id="prenom" name='firstName' value="${firstName}" />
               <label for="name">Nom</label>
-              <input type="text" name='lastName' id="name"/>
+              <input type="text" name='lastName' id="name" value="${lastName}"/>
             </div>
           </div>
           <div class="form__component functions">
             <i class="fa-solid fa-building"></i>
             <div>
               <label for='entreprise'>Entreprise</label>
-              <input name='enterprise' type="text" id="entreprise" />
+              <input name='enterprise' type="text" id="entreprise" value="${enterprise}" />
               <label for="fonction">Foncton</label>
-              <input type="text" id="fonction" name="functionIn" id="function" />
+              <input type="text" id="fonction" name="functionIn" id="function" value='${functionIn}'  />
             </div>
           </div>
           <div class="form__component contacts">
             <i class="fa-regular fa-envelope"></i>
             <div>
               <label for="email">Email</label>
-              <input type="text" id="email" name="email" id="email" />
+              <input type="text" id="email" name="email" id="email" value='${email}' />
               <button class="add-button">
                 <i class="fa-solid fa-plus"></i>Ajouter une adresse Email
               </button>
@@ -295,9 +313,9 @@ function addEditContact(
 
             <i class="fa-solid fa-phone"></i>
             <div class="phone-number__container">
-              <select name="countryId" id="country-id"><option value="243">+243</option></select>
+              <select name="countryId" id="country-id" def ><option selected value="243">+243</option></select>
               <label for="phone_number">Telephone</label>
-              <input type="text" name='phoneNumber'
+              <input type="text" value='${phoneNumber}' name='phoneNumber'
                 id="phone_number" />  
               <button class="add-button">
                 <i class="fa-solid fa-plus"></i>Ajouter un numero de telphone
