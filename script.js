@@ -15,6 +15,8 @@ function updateCounter() {
   });
 }
 
+updateCounter();
+
 function displayContactList(contactArray) {
   let innerHTML = "";
 
@@ -176,9 +178,7 @@ function createContact(
   main.innerHTML = preview.at(-1);
   console.log(displayContactList(contactArray));
   main.innerHTML += displayContactList(contactArray);
-  main.querySelector(".main__header p").innerHTML = ` (${
-    contactArray.filter((el) => !el.isDeleted).length
-  })`;
+  updateCounter();
 
   preview.pop();
 }
@@ -426,6 +426,7 @@ function openAddContact(event) {
       );
       event.target.reset();
     }
+
     event.preventDefault();
   });
 }
