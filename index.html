@@ -14,7 +14,7 @@
 
   <body>
     <div id="overlay" style="display: none"></div>
-    <form id="create-label" onsubmit="createLabel" style="display: none">
+    <form id="create-label" onsubmit="createLabel(event)" style="display: none">
       <h1>Créer un libellé</h1>
       <label for="label-name">Nouveau label</label>
       <input name="labelName" type="text" id="label-name" />
@@ -51,7 +51,7 @@
       <div class="side-bar">
         <button
           class="section__title primary-button"
-          onclick="openAddContact()"
+          onclick="openAddContact(event)"
           id="create-contact"
         >
           <i class="fa-solid fa-plus"></i>
@@ -63,7 +63,7 @@
         </div>
         <div class="section__title component frequents">
           <h2>Contacts</h2>
-          <i></i>
+          <p class="counter side"></p>
         </div>
         <div class="section__label__list__container">
           <div class="labels__title component">
@@ -78,7 +78,7 @@
         <div class="main__list">
           <div class="head main__header">
             <h1>Contacts</h1>
-            <p></p>
+            <p class="counter"></p>
           </div>
           <div class="contact-list__container">
             <div class="head contact-list-header">

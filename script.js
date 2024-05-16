@@ -6,8 +6,14 @@ const main = document.querySelector(".main__list");
 const preview = [];
 const contactArray = [];
 const labelArray = [];
-
-main.querySelector(".main__header p").innerHTML = ` (${contactArray.length})`;
+function updateCounter() {
+  document.querySelectorAll(".counter").forEach((counter) => {
+    counter.innerHTML = !counter.className.includes("side")
+      ? ` (${contactArray.length}) `
+      : ` ${contactArray.length} `;
+    console.log(counter.innerHTML);
+  });
+}
 
 function displayContactList(contactArray) {
   let innerHTML = "";
@@ -48,7 +54,6 @@ function displayContactList(contactArray) {
       `;
     }
   });
-  console.log(innerHTML);
   return innerHTML;
 }
 
@@ -171,7 +176,6 @@ function createContact(
   main.innerHTML = preview.at(-1);
   console.log(displayContactList(contactArray));
   main.innerHTML += displayContactList(contactArray);
-  console.log(main.querySelector(".main__header p").innerHTML);
   main.querySelector(".main__header p").innerHTML = ` (${
     contactArray.filter((el) => !el.isDeleted).length
   })`;
@@ -213,7 +217,7 @@ function addEditContact(contactId = "", action = "add") {
     isFavorite =
     labels =
     id =
-      "sdf");
+      "");
   console.log(enterprise);
   if (action === "edit" && contactId !== "") {
     const contactIndex = contactArray.findIndex(
@@ -296,7 +300,6 @@ function addEditContact(contactId = "", action = "add") {
 
 function openAddContact(event) {
   preview.push(main.innerHTML);
-
   main.innerHTML = `
     <main class="add-edit-contact">
 				<form>
@@ -389,11 +392,10 @@ function openAddContact(event) {
       }
     });
   });
-
-  const contactForm = document.querySelector("form");
-  console.log(contactForm);
+  const contactForm = document.querySelector(".add-edit-contact form");
   contactForm.addEventListener("submit", (event) => {
-    event.preventDefault();
+    const data = new FormData(event.target);
+
     const {
       countryId,
       email,
@@ -402,7 +404,7 @@ function openAddContact(event) {
       functionIn,
       lastName,
       phoneNumber,
-    } = Object.fromEntries(new FormData(event.target).entries());
+    } = Object.fromEntries(data.entries());
 
     if (
       countryId &&
@@ -424,5 +426,6 @@ function openAddContact(event) {
       );
       event.target.reset();
     }
+    event.preventDefault();
   });
 }
