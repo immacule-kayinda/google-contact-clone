@@ -57,13 +57,21 @@
           <i class="fa-solid fa-plus"></i>
           <h1>Créer un contact</h1>
         </button>
-        <div class="section__title component frequents">
+        <div
+          onclick="setCurrent(event)"
+          id="contact-list"
+          class="section__title component frequents"
+        >
+          <h2>Contacts</h2>
+          <i class="counter side"></i>
+        </div>
+        <div id="frequents-list" class="section__title component frequents">
           <h2>Frequents</h2>
           <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
-        <div class="section__title component frequents">
-          <h2>Contacts</h2>
-          <p class="counter side"></p>
+        <div id="trash-list" class="section__title component frequents">
+          <h2>Corbeille</h2>
+          <i class="fa-solid fa-trash"></i>
         </div>
         <div class="section__label__list__container">
           <div class="labels__title component">

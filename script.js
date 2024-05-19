@@ -25,38 +25,56 @@ function displayContactList(contactArray) {
     if (!contactId && contact.isDeleted === false) {
       console.log(preview.includes(contact.id));
       let labelHtml = "";
-      contact.labels.forEach((label) => {
+      contact.labels.forEach((label, id) => {
         labelHtml += `
-        <div class="label">
-        ${label}
+        <div id="${id}" class="label">
+          ${label}
         </div>
         `;
       });
 
       innerHTML += `
-      <div class="contact-item">
-        <div class="head contact-list-header" id="${contact.id}">
-        <div class="contact-item header__title">${
-          contact.firstName + " " + contact.lastName
-        }</div>
-        <div class="contact-item header__email">
-          ${contact.email}
-        </div>
-        <div class="contact-item header__phone-number">
-          ${contact.phoneNumber}
-        </div>
-        <div class="contact-item header__fonction-and-enterprise">
-          ${contact.functionIn}
-        </div>
-        <div class="contact-item header__label">
-          ${labelHtml}
-        </div>
-        </div>
+      <div class="hover-class" >
+        <div class="head contact-elementonclick='retrieveContact(event)' contact-list-header" id="${
+          contact.id
+        }">
+            <div class="contact-item header__title">${
+              contact.firstName + " " + contact.lastName
+            }</div>
+            <div class="contact-item header__email">
+              ${contact.email}
+            </div>
+            <div class="contact-item header__phone-number">
+              ${contact.phoneNumber}
+            </div>
+            <div class="contact-item header__fonction-and-enterprise">
+              ${contact.functionIn}
+            </div>
+            <div class="contact-item header__label">
+              ${labelHtml}
+            </div>
+          </div>
+          <div class="action-hover__button" >
+            <button class="action__button delete__button" onclick="deleteContactHandler(event)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            <button onclick="modifyContactHandler(event)" class="action__button modify__button">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
       </div>
       `;
     }
   });
   return innerHTML;
+}
+
+function deleteContactHandler(event){
+  console.log(event.target)
+}
+
+function modifyContactHandler(event) {
+  console.log(event.target)
 }
 
 function closePopup() {
@@ -79,8 +97,7 @@ function createLabel(event) {
     <div class="label__item">
       <i class="fa-solid fa-bookmark"></i>
       <h2>${labelName}</h2>
-    </div>  
-`;
+    </div>`;
 }
 
 function openCreateLabelPopup() {
@@ -95,7 +112,6 @@ function createElement(type, properties = {}) {
 }
 
 function researching() {
-  console.log("'esdf");
   const search = document.getElementById("search").value;
   const contactList = document.querySelector(".contact-list").innerHTML;
   let innerHTML = "";
@@ -115,7 +131,7 @@ function researching() {
           });
 
           innerHTML += `
-        <div class="contact-item">
+        <div class="contact-item" id="${id}">
           <div class="head contact-list-header" id="${contact.id}">
           <div class="contact-item header__title">${
             contact.firstName + " " + contact.lastName
@@ -176,9 +192,21 @@ function createContact(
   });
   console.log(contactArray.filter((el) => el.isDeleted));
   main.innerHTML = preview.at(-1);
-  console.log(displayContactList(contactArray));
   main.innerHTML += displayContactList(contactArray);
   updateCounter();
+  const hoverClasses = document.querySelectorAll(".hover-class");
+  hoverClasses.forEach((hoverClass) => {
+    hoverClass.addEventListener("mouseover", function (event) {
+      hoverClass.querySelector(
+        ".action-hover__button, .action-hover__button button"
+      ).style.left = "80%";
+    });
+    hoverClass.addEventListener("mouseout", function (event) {
+      hoverClass.querySelector(
+        ".action-hover__button, .action-hover__button button"
+      ).style.left = "100%";
+    });
+  });
 
   preview.pop();
 }
@@ -195,7 +223,7 @@ function deleteContact(contactId) {
   }
 }
 
-function updateTask(contactId) {
+function updateContact(contactId) {
   const task = document.getElementById(contactId);
   const taskLabel = task.querySelector("label");
   const newTaskName = prompt("Enter the new task name", taskLabel.textContent);
