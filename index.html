@@ -60,16 +60,24 @@
         <div
           onclick="setCurrent(event)"
           id="contact-list"
-          class="section__title component frequents"
+          class="section__title component current frequents"
         >
           <h2>Contacts</h2>
           <i class="counter side"></i>
         </div>
-        <div id="frequents-list" class="section__title component frequents">
+        <div
+          id="frequents-list"
+          onclick="setCurrent(event)"
+          class="section__title component frequents"
+        >
           <h2>Frequents</h2>
           <i class="fa-solid fa-clock-rotate-left"></i>
         </div>
-        <div id="trash-list" class="section__title component frequents">
+        <div
+          id="trash-list"
+          class="section__title component frequents"
+          onclick="setCurrent(event)"
+        >
           <h2>Corbeille</h2>
           <i class="fa-solid fa-trash"></i>
         </div>

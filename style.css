@@ -441,11 +441,11 @@ figure .fa-plus {
 }
 
 .action-hover__button {
+  position: relative;
   width: 100px;
   height: 60px;
   z-index: 1;
-  position: relative;
-  bottom: 40px;
+  bottom: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -454,6 +454,7 @@ figure .fa-plus {
 .action-hover__button,
 .action-hover__button button {
   z-index: 4;
+  left: 100%;
   transition: all 0.1s ease-in-out;
 }
 
@@ -462,7 +463,6 @@ figure .fa-plus {
   width: 40px;
   border: 1px solid var(--tertiary-color);
   border-radius: 50%;
-  left: 80%;
 }
 
 .action-hover__button button:hover {
@@ -472,9 +472,4 @@ figure .fa-plus {
 .hover-class {
   max-width: 100%;
   height: 60px;
-}
-#contact-overlay {
-  position: sticky;
-  background-color: red;
-  z-index: auto;
 }
